@@ -1,0 +1,36 @@
+<br>
+<h1 class="page-header">Register</h1> <br>
+<form method="POST" (submit)="userSignup()">
+  <div class="form-group" >
+    <label for="exampleFormControlInput1">Name</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" [(ngModel)]="uname" #name="ngModel" name="name" required>
+    <div class="alert alert-danger" *ngIf="name.touched && !name.valid">Name is required</div>
+  </div>
+  {{uname}}
+  
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email</label>
+    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" id="exampleFormControlInput1" [(ngModel)]="uemail" #email="ngModel" name="email" required>
+    <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+        <div *ngIf="email.errors.pattern">Enter valid email</div>
+        <div *ngIf="email.errors.required">Email is required</div>
+      </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Password</label>
+    <input minlength="6" type="password" class="form-control" id="exampleFormControlInput1" [(ngModel)]="upassword" #password="ngModel" name="password" required>
+    <div class="alert alert-danger" *ngIf="password.touched && !password.valid">
+      <div *ngIf="password.errors.minlength">Passoword shoud be minimun {{ password.errors.minlength.requiredLength }} characters</div>
+      <div *ngIf="password.errors.required">Passoword is required</div>
+    </div>
+  </div>
+  
+  <input type="submit" value="Register" class="btn btn-primary">
+  </form>
+
+  <style>
+  .form-control.ng-touched.ng-invaild {
+    border: 2px solid red;
+}
+  </style>

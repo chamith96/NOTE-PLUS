@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li [routerLinkActive]="['active']" class="nav-item active">
+                <a [routerLink]="['/']" class="nav-link">NOTE+</a>
+            </li>
+            <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!auth.logedIn()">
+                <a [routerLink]="['dashboard']" class="nav-link">Dashboard</a>
+            </li>
+            <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!auth.logedIn()">
+                <a [routerLink]="['/note/create']" class="nav-link">Create Note</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li [routerLinkActive]="['active']" class="nav-item" *ngIf="auth.logedIn()">
+                <a [routerLink]="['/register']" class="nav-link">Register</a>
+            </li>
+            <li [routerLinkActive]="['active']" class="nav-item" *ngIf="auth.logedIn()">
+                <a [routerLink]="['/login']" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="!auth.logedIn()">
+                <a href="#" (click)="logOut()" class="nav-link">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>

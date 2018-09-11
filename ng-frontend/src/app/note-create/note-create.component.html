@@ -1,0 +1,16 @@
+<br>
+<h1 class="page-header">Note Create</h1> <br>
+<form method="POST" (submit)="noteSubmit()">
+  <div class="form-group" >
+    <label for="exampleFormControlInput1">Title</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" [(ngModel)]="title" name="title">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Body</label>
+    <textarea rows="5" name="body" class="form-control" [(ngModel)]="body"></textarea>
+  </div>
+  
+  <input type="submit" value="Note Create" class="btn btn-primary">
+  </form>
+

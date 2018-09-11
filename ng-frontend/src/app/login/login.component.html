@@ -1,0 +1,22 @@
+<br>
+<h1 class="page-header">Login</h1> <br>
+<form method="POST" (submit)="userLogin()">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email</label>
+    <input required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="uemail" #email="ngModel" name="email" required>
+    <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+        <div *ngIf="email.errors.pattern">Enter valid email</div>
+        <div *ngIf="email.errors.required">Email is required</div>
+      </div>
+  </div>
+  
+  <div class="form-group">
+      <label for="exampleFormControlInput1">Password</label>
+      <input type="password" class="form-control" id="exampleFormControlInput1" [(ngModel)]="upassword" #password="ngModel" name="password" required>
+      <div class="alert alert-danger" *ngIf="password.touched && !password.valid">
+        <div *ngIf="password.errors.required">Passoword is required</div>
+      </div>
+    </div>
+  
+  <input type="submit" value="Login" class="btn btn-primary">
+  </form>

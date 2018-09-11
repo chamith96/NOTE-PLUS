@@ -1,0 +1,7 @@
+<ul class="list-group" *ngIf="note">
+  <li class="list-group-item active">{{note.title}}</li>
+  <li class="list-group-item">{{note.body}}</li>
+</ul>
+  <br>
+    <button *ngIf="note" class="btn btn-primary" routerLink="/note/{{note._id}}/edit">Edit</button> &nbsp;
+    <button class="btn btn-danger" (click)="deleteNote()">Delete</button>
