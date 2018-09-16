@@ -3,9 +3,20 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Note = require('../models/Note');
+const multer = require('multer');
 const checkAuth = require('./check-auth');
 const router = express.Router();
 
+const storage = multer.diskStorage({ 
+    destination: function(req, file, cb) {
+        cb(null, './public/storage/');
+    },
+    filename:  function(req, file, cb) {
+        cb(null , Date.now() + file.originalname);
+    }
+});
+
+const upload = multer({storage: storage});
 
 //get register
 router.post('/register', (req, res, next) => {
@@ -85,10 +96,12 @@ router.get('/note/:id', (req, res) => {
 });
 
 //note create
-router.post('/note/create', (req, res) => {
+router.post('/note/create', upload.single('image'), (req, res) => {
+    console.log(req.file);
     const note = new Note({
         title: req.body.title,
         body: req.body.body,
+        image:req.file.path,
         user_id: req.body.user_id
     });
     note.save()
