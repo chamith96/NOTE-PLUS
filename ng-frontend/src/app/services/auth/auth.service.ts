@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +9,10 @@ export class AuthService {
 
 user: any;
 authToken : any;
+role: Boolean;
 
-  constructor(private http: HttpClient, private jwtauth: JwtHelperService) { }
+  constructor(private http: HttpClient, private jwtauth: JwtHelperService) {
+   }
 
   registerUser(user){
     let headers = new HttpHeaders();
@@ -44,6 +45,14 @@ authToken : any;
   //get token expire or not
   logedIn() {
     return this.jwtauth.isTokenExpired();
+  }
+
+  verify() {  
+    const token = localStorage.getItem('id_token');
+
+    // decode the token to get its payload
+    const tokenPayload = this.jwtauth.decodeToken(token);
+    return tokenPayload.isAdmin;
   }
 
 }

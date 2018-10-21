@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { JwtModule } from '@auth0/angular-jwt'; 
+import { FileUploadModule } from 'ng2-file-upload';
+import { Route } from '../app/app.route';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -16,26 +17,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NoteCreateComponent } from './note-create/note-create.component';
 import { NoteShowComponent } from './note-show/note-show.component';
 import { NoteEditComponent } from './note-edit/note-edit.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 import { AuthService } from './services/auth/auth.service';
-import { NoteService } from './services/note/note.service';
+import { NoteService } from './services/note/note.service'; 
+import { AdminAuthService } from './services/admin-auth/admin-auth.service';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
+import { AdminAuthGuardService } from './services/admin-auth-guard/admin-auth-guard.service';
 
 export function tokenGetter() {
   return localStorage.getItem('id_token');
 }
-
-const appRoutes = [
-  { path: '', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuardService] },
-  { path: 'note/create', component: NoteCreateComponent, canActivate:[AuthGuardService] },
-  { path: 'note/:id', component: NoteShowComponent, canActivate:[AuthGuardService] },
-  { path: 'note/:id/edit', component: NoteEditComponent,canActivate:[AuthGuardService] },
-  { path: '**', component: ErrorComponent }
-];
-
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,13 +42,16 @@ const appRoutes = [
     NoteCreateComponent,
     NoteShowComponent,
     NoteEditComponent,
+    AdminLoginComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    FileUploadModule,
     FlashMessagesModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
+    Route,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -65,7 +62,9 @@ const appRoutes = [
   providers: [
     AuthService,
     NoteService,
-    AuthGuardService
+    AdminAuthService,
+    AuthGuardService,
+    AdminAuthGuardService
   ],
   bootstrap: [AppComponent]
 })

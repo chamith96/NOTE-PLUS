@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { AuthService } from '../services/auth/auth.service';
-
+import { AdminAuthService } from '../services/admin-auth/admin-auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private auth: AuthService, private router: Router,  private flashMessage: FlashMessagesService) { }
+  constructor(private auth: AuthService,private adminAuth: AdminAuthService, private router: Router,  private flashMessage: FlashMessagesService) { }
 
   ngOnInit() {
   }

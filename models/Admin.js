@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const userSchema = mongoose.Schema;
+const adminSchema = mongoose.Schema;
 
-//make user schema
-user = new userSchema({
+//make Schema
+const admin = new adminSchema({
     name: {
         type: String
     },
@@ -17,11 +17,11 @@ user = new userSchema({
     },
     isAdmin: {
         type: Boolean,
-        default: false
+        default: true
     }
 });
 
-//make user model
-const User = mongoose.model('User', user);
+//make model
+const Admin = mongoose.model('Admin', admin);
 
-module.exports = User;
+module.exports = Admin;

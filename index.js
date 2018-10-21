@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const route = require('./routes/api');
+const router = require('./routes/api-admin');
 
 //set up express app
 const app = express();
@@ -13,7 +14,7 @@ app.use(cors());
 mongoose.Promise = global.Promise;
 
 //connect to mongodb
-mongoose.connect('mongodb://localhost:27017/noote_plus');
+mongoose.connect('mongodb://localhost:27017/note_plus');
 
 //set static folder
 app.use(express.static('public'));
@@ -23,6 +24,9 @@ app.use(bodyParser.json());
 
 //set routes
 app.use('/api', route);
+
+//set admin routes
+app.use('/admin', router);
 
 //make connection
 const port = process.env.PORT || 3000;

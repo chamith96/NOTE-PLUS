@@ -7,12 +7,12 @@ const multer = require('multer');
 const checkAuth = require('./check-auth');
 const router = express.Router();
 
-const storage = multer.diskStorage({ 
+const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './public/storage/');
     },
-    filename:  function(req, file, cb) {
-        cb(null , Date.now() + file.originalname);
+    filename: function(req, file, cb) {
+        cb(null , Date.now() +'.'+ file.originalname);
     }
 });
 
@@ -22,7 +22,7 @@ const upload = multer({storage: storage});
 router.post('/register', (req, res, next) => {
     User.findOne({ email: req.body.email })
     .then(user => {
-      if (user >=1) {
+      if (user >= 1) {
         res.json({message: "User exists"});
       } else {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -62,15 +62,17 @@ router.post('/login', (req, res, next) => {
         if (err) throw err;
 
         if (result) {
-            const token = jwt.sign({id: user._id},"security",{expiresIn: "168h"});
+            const token = jwt.sign({id: user._id, isAdmin: false},"security",{expiresIn: "168h"});
                 return res.json({
                     success: true,
                     token: token,
                     user: {
                         id: user._id,
                         name: user.name,
-                        email: user.email
+                        email: user.email,
+                        isAdmin: user.isAdmin
                     }
+
                 });
         }
         res.json({message: "password not match", success: false});
@@ -96,12 +98,12 @@ router.get('/note/:id', (req, res) => {
 });
 
 //note create
-router.post('/note/create', upload.single('image'), (req, res) => {
+router.post('/note/create', (req, res) => {
     console.log(req.file);
     const note = new Note({
         title: req.body.title,
         body: req.body.body,
-        image:req.file.path,
+        image: req.body.image,
         user_id: req.body.user_id
     });
     note.save()
@@ -111,6 +113,12 @@ router.post('/note/create', upload.single('image'), (req, res) => {
     .catch(err => {
         res.send(err);
     });
+});
+
+//upload
+router.post('/upload', upload.single('image'), (req, res) => {
+
+res.json({originalname:req.file.originalname, uploadname: req.file.filename});
 });
 
 //note edit

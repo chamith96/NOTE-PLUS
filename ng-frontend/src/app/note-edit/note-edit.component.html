@@ -1,15 +1,17 @@
 <br>
 <h1 class="page-header">Note Edit</h1> <br>
-<form method="POST" (submit)="editNote()">
-  <div class="form-group" >
-    <label for="exampleFormControlInput1">Title</label>
-    <input required type="text" class="form-control" id="exampleFormControlInput1" [(ngModel)]="title" name="title" value="{{note.title}}">
-  </div>
-
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Body</label>
-    <textarea rows="5" name="body" class="form-control" [(ngModel)]="body" value="{{note.body}}"></textarea>
-  </div>
+<form method="POST" (submit)="editNote()"  #myForm="ngForm">
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Title</label><i>*</i>
+        <input type="text" class="form-control" id="exampleFormControlInput1" [(ngModel)]="ntitle" #title="ngModel" name="title" required>
+        <div class="alert" *ngIf="title.touched && !title.valid">Title is required</div>
+      </div>
+    
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Body</label><i>*</i>
+        <textarea rows="5" name="body" class="form-control" [(ngModel)]="nbody" #body="ngModel" name="body" required></textarea>
+        <div class="alert" *ngIf="body.touched && !body.valid">Content is required</div>
+      </div>
   
-  <input type="submit" value="submit" class="btn btn-primary">
+      <input type="submit" value="Note Create" class="btn btn-primary" [disabled]="!myForm.valid">
   </form>

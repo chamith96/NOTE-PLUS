@@ -6,13 +6,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class NoteService {
   authToken = localStorage.getItem('id_token');
+  selectfile;
 
   constructor(private http: HttpClient) { }
   
   submitNote(note){
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-      return this.http.post('http://localhost:3000/api/note/create', note, {headers: headers});
+      return this.http.post('http://localhost:3000/api/note/create', note,{headers: headers});
   }
 
   showAllNotes() {
